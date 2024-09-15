@@ -35,16 +35,3 @@ def vig_decrypt(text,key):
 def vig_encrypt(text,key):
     return vig_process(text,key,'encrypt')
 
-
-# expected: Hard for me to breathe when you are around
-res = vig_decrypt("Kaej trr zk hr bekowhr cvhn lui drr gfruaj", "dango")
-print(res)
-# expected: I love bingsu
-res2 = vig_decrypt("G faty nghsqo", "yum")
-print(res2)
-
-res3 = vig_encrypt("I love bingsu", "yum")
-print(res3)
-
-res4 = vig_encrypt("Hard for me to breathe when you are around", "dango")
-print(res4)
