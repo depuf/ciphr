@@ -6,7 +6,7 @@ def caesar_process(text,shift):
     result = ""
     for letter in text:
         if letter.isalpha():
-            offset = 65 if letter.isupper() else 97
+            offset = ord("A") if letter.isupper() else ord("a")
             x = (ord(letter)- offset - shift) % wav
             result += chr(x + offset)
         else:
