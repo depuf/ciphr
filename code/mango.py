@@ -1,4 +1,6 @@
-''' code was originally written to help a friend with a side quest
+''' 
+    will work on this after vig brute force. maybe not. idk.
+    code was originally written to help a friend with a side quest
     the algorithm in the file i was sent:
         "for example the (7,2) system: 
         make a sequence 7,9,11,13,15 and code the first letter of your message with +7 
