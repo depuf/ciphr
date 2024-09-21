@@ -37,9 +37,8 @@ def subtraction(dict):
             difference_list.extend(diff)
     return difference_list
 
-def get_gcd(list):
+def get_keys(list):
     # function that finds the gcd of given list of numbers
-    # change logic from line 46-48
     candidate_dic = defaultdict(int)
     for x in range(len(list)):
         for y in range(3,math.isqrt(list[x])+1): # 3 yields the most accurate results
@@ -49,14 +48,33 @@ def get_gcd(list):
                 candidate_dic[num1] += 1
                 candidate_dic[num2] += 1
     keys = [k for k, v in sorted(candidate_dic.items(), key=lambda x: (-x[1], -x[0]))]
-    print(keys)
+    return keys
+
+def freq_analysis(groupings):
+    for g in groupings:
+        c = Counter(g)
+        print(c)
+
+def letter_groups(keys,text):
+    cleaned_text = ''.join([char for char in text if char.isalpha()])
+    key = keys[0]
+    groupings = ['' for _ in range(key)]
+    for i,letter in enumerate(cleaned_text):
+        group = i % int(key)
+        groupings[group] += cleaned_text[i]
+    return groupings
+
 
 def kasiski(text):
     # kasiski finds repeated letters, take notes of starting point, subtract, then get_gcd() after
     # will have a list of results from subtraction
     dict = repeated_sequence(text)
     dif_list = subtraction(dict)
-    get_gcd(dif_list)
+    keys = get_keys(dif_list)
+    groupings = letter_groups(keys,text)
+    freq_analysis(groupings)
+
+
 
     
 
@@ -84,8 +102,9 @@ def friedman(text):
 
 
 kasiski("yhtl xaj tje aytt kioe nmv fvln ic jpvv? wjai bjd zt hetj mibe? qkpw. j sve. cns rie srgazsq hlrv lxif hvln rxeit? yoy dxb zmrncgt rp mfvg oc dsod sqmtmoe khct lyt yfut lxdflzng? dxb uhv tjojeit ff jib ujty sqmtmoe vlue rpvsy yqug qpuc apd icbr powr wcbrk aragr?")
-kasiski("Ic psp vvrsdfzv nmok mo jvqh cmfi kt pv acscj? Pvgvyjj W usi’x. Z tbcc midjasim lzr, hyi rep ms deyi vasicolzsu wizp ijoc. Rja zy’g aynx hzwvx, gmbj W’d avmknbx jjv jtavxcmel hyeo’w ejjvv xsdnbx fvgb. N azwn xyj krc ci wnzciy xyj gzpzrtj. Bfa, dx’j oijx hi—vrdkc, gsjy. W usi’x bscn acek yc us rmkm hyi ntrhs yi giwy pvldru. Nh’j pdov yfpmik kt vfpy seyc jshikmwek olry krw iimjf iivpcd hyimi.")
-kasiski("A tsizs A fplx ngr ehq dwrdiav gf jog bzae oztq eiiebk iy mk pwao. Ttm gnp wtw didtqvk, wso gvvecsfifdd, wtw keps ym lhp wmg A wtst ggu nogtv. Ie’s xqce T cdmstpd fpas aednwce iyiye zf kwm, pteomv tzgqbzec fdwe tse yweeyte ezece kwm wprq idmzsf ezae I zmwdpd. Ncl tse fzmts ie, ggu’ce zwl htm, mzw yzu? Kwm npvqz oece. U swea hatviyg av lo ehua adpa an ohz yac uoflp jw, wso U eass yac oece, ncl ie’s vckt l stivoh—a riftlsk. Ifd yo yiltpr two mfct Q oayt ub lo me dmsl, T kzwo dpeb lgwy ttil I’x iz tgvp wubz szmqwfe hha lgedn’f mpidt.")
+#kasiski("Ic psp vvrsdfzv nmok mo jvqh cmfi kt pv acscj? Pvgvyjj W usi’x. Z tbcc midjasim lzr, hyi rep ms deyi vasicolzsu wizp ijoc. Rja zy’g aynx hzwvx, gmbj W’d avmknbx jjv jtavxcmel hyeo’w ejjvv xsdnbx fvgb. N azwn xyj krc ci wnzciy xyj gzpzrtj. Bfa, dx’j oijx hi—vrdkc, gsjy. W usi’x bscn acek yc us rmkm hyi ntrhs yi giwy pvldru. Nh’j pdov yfpmik kt vfpy seyc jshikmwek olry krw iimjf iivpcd hyimi.")
+#kasiski("A tsizs A fplx ngr ehq dwrdiav gf jog bzae oztq eiiebk iy mk pwao. Ttm gnp wtw didtqvk, wso gvvecsfifdd, wtw keps ym lhp wmg A wtst ggu nogtv. Ie’s xqce T cdmstpd fpas aednwce iyiye zf kwm, pteomv tzgqbzec fdwe tse yweeyte ezece kwm wprq idmzsf ezae I zmwdpd. Ncl tse fzmts ie, ggu’ce zwl htm, mzw yzu? Kwm npvqz oece. U swea hatviyg av lo ehua adpa an ohz yac uoflp jw, wso U eass yac oece, ncl ie’s vckt l stivoh—a riftlsk. Ifd yo yiltpr two mfct Q oayt ub lo me dmsl, T kzwo dpeb lgwy ttil I’x iz tgvp wubz szmqwfe hha lgedn’f mpidt.")
 #friedman("k gdr hofsgbjkqs nhgn nmv tflf mt wpu coxes kf")
-kasiski("Altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. Ivplyprr th pw clhoic pozc. :-)")
+#kasiski("Altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. Ivplyprr th pw clhoic pozc. :-)")
+#kasiski("z fjiw qruw tex tmq azmo. b rvtmdikfpr rvimj wetivkm nyqpv fbvvju zmhkfvyccfq. arb xltk np ujwkf khu xbly")
 
