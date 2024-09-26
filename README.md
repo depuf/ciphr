@@ -1,3 +1,9 @@
 # ciphr
 
-the cipher text 'yhtl xaj tje aytt kioe nmv fvln ic jpvv? wjai bjd zt hetj mibe? qkpw. j sve. cns rie srgazsq hlrv lxif hvln rxeit? yoy dxb zmrncgt rp mfvg oc dsod sqmtmoe khct lyt yfut lxdflzng? dxb uhv tjojeit ff jib ujty sqmtmoe vlue rpvsy yqug qpuc apd icbr powr wcbrk aragr?' which was encrypted with an 8-letter key (capybara), was tested with both kasiski and friedman tests. kasiski yielded the correct result and i dont know what went wrong with friedman.
+# Overview
+
+This program is designed to handle both Vigenère and Caesar ciphers, with the ability to encrypt and decrypt texts.
+
+# Current features (26 September)
+- supports encryption and decryption for caesar cipher, and brute forces caesar when shift is unknown
+- supports encryption and decryption(with known key) for vigenère cipher. decryption without key is still a work in progress but the program is able to accurately guess the key length
