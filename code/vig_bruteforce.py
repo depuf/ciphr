@@ -9,11 +9,12 @@ todo:
 
 import operator
 from vigenere import vig_decrypt
+from caesar import caesar_decrypt
 from collections import Counter, defaultdict  # counter for frequency analysis and logic that i cant be bothered writing
 import math
 import numpy
 
-LETTER_FREQ = 'etaoinsrhdlucmfywgpbvkxqjz' # https://pi.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
+LETTER_FREQ = 'etaoin' # https://pi.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
 
 
 # kasiski part
@@ -53,7 +54,9 @@ def get_keys(list):
 def freq_analysis(groupings):
     for g in groupings:
         c = Counter(g)
-        print(c)
+        max_char = c.most_common()[0][0]
+        pot_shift = ord(max_char)-ord('e')
+        print(caesar_decrypt(g,pot_shift))
 
 def letter_groups(keys,text):
     cleaned_text = ''.join([char for char in text if char.isalpha()])
@@ -63,6 +66,7 @@ def letter_groups(keys,text):
         group = i % int(key)
         groupings[group] += cleaned_text[i]
     return groupings
+
 
 
 def kasiski(text):
