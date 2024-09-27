@@ -67,10 +67,17 @@ def freq_analysis(groupings):
     decrypted_grps = []
     pot_key = ''
     for g in groupings:
-        pass
+        for i in range(0,26):
+            pot_letter = chr((i % 26) + ord('a'))
+            chi(caesar_decrypt(g,i)) # pass to chi
+        # chi spits back a number
+        # keep track of smallest number
+        # wahetever letter created smallest number is probably key
         
-def chi():
-    pass
+def chi(decrypted_text):
+    c = Counter(decrypted_text)
+    length = len(decrypted_text)
+    print(c,length)
 
 
 def kasiski(text):
@@ -80,7 +87,7 @@ def kasiski(text):
     dif_list = subtraction(dict)
     keys = get_keys(dif_list)
     groupings = letter_groups(keys,text)
-    decrypted, potkey = freq_analysis(groupings)
+    freq_analysis(groupings)
 
 
 
