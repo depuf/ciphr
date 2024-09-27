@@ -1,12 +1,23 @@
-import operator
-from vigenere import vig_decrypt
 from caesar import caesar_decrypt
 from collections import Counter, defaultdict  # counter for frequency analysis and logic that i cant be bothered writing
 import math
-import numpy
+import numpy as np
 
 LETTER_FREQ = 'etaoin' # https://pi.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
 
+BIGRAMs = ['th','he','in','er','an','re','on','at','en',
+           'nd','ti','es','or','te','of','ed','is','it',
+           'al','ar','st','to','nt','ng','se','ha','as',
+           'ou','io','le','ve','co','me','de','hi','ri'
+           'ro','ic','ne','ea','ra','ce']
+
+expected_frequencies = {
+    'E': 12.49, 'T': 9.28, 'A': 8.04, 'O': 7.64, 'I': 7.57, 'N': 7.23,
+    'S': 6.51, 'R': 6.28, 'H': 5.05, 'L': 4.07, 'D': 3.82, 'C': 3.34,
+    'U': 2.73, 'M': 2.51, 'F': 2.40, 'P': 2.14, 'G': 1.87, 'W': 1.68,
+    'Y': 1.66, 'B': 1.48, 'V': 1.05, 'K': 0.54, 'X': 0.23, 'J': 0.16,
+    'Q': 0.12, 'Z': 0.09
+}
 
 # kasiski part (useless without repeats in ciphertext)
 def repeated_sequence(text,length=3):
@@ -24,7 +35,7 @@ def subtraction(dict):
     difference_list = []
     for key,value in dict.items():
         if(len(value)>1):
-            diff = numpy.diff(value)
+            diff = np.diff(value)
             difference_list.extend(diff)
     return difference_list
 
@@ -53,11 +64,14 @@ def letter_groups(keys,text):
 
 # wip
 def freq_analysis(groupings):
+    decrypted_grps = []
+    pot_key = ''
     for g in groupings:
-        c = Counter(g)
-        max_char = c.most_common()[0][0]
-        pot_shift = ord(max_char)-ord('e')
-        print(caesar_decrypt(g,pot_shift))
+        pass
+        
+def chi():
+    pass
+
 
 def kasiski(text):
     # kasiski finds repeated letters, take notes of starting point, subtract, then get_gcd() after
@@ -66,7 +80,8 @@ def kasiski(text):
     dif_list = subtraction(dict)
     keys = get_keys(dif_list)
     groupings = letter_groups(keys,text)
-    freq_analysis(groupings)
+    decrypted, potkey = freq_analysis(groupings)
+
 
 
 
@@ -78,11 +93,11 @@ def count():
     pass
 
 
-kasiski("gvzmyfhhebpwauvgvdnqvbohojcmlnvhcixxwntrrwialvzdtibtohouihaxzwiddbqjrbrzvtonzgidfqjndrbosgrzdvobbvpvnqddsfzvnnbtdgxbfvnmrwitrraddcgcabvnqfsongjfsatdnsgmvnnvhracacomonbotrnhrecucplnictaqrtvr")
-#kasiski("yhtl xaj tje aytt kioe nmv fvln ic jpvv? wjai bjd zt hetj mibe? qkpw. j sve. cns rie srgazsq hlrv lxif hvln rxeit? yoy dxb zmrncgt rp mfvg oc dsod sqmtmoe khct lyt yfut lxdflzng? dxb uhv tjojeit ff jib ujty sqmtmoe vlue rpvsy yqug qpuc apd icbr powr wcbrk aragr?")
+#kasiski("gvzmyfhhebpwauvgvdnqvbohojcmlnvhcixxwntrrwialvzdtibtohouihaxzwiddbqjrbrzvtonzgidfqjndrbosgrzdvobbvpvnqddsfzvnnbtdgxbfvnmrwitrraddcgcabvnqfsongjfsatdnsgmvnnvhracacomonbotrnhrecucplnictaqrtvr")
+kasiski("yhtl xaj tje aytt kioe nmv fvln ic jpvv? wjai bjd zt hetj mibe? qkpw. j sve. cns rie srgazsq hlrv lxif hvln rxeit? yoy dxb zmrncgt rp mfvg oc dsod sqmtmoe khct lyt yfut lxdflzng? dxb uhv tjojeit ff jib ujty sqmtmoe vlue rpvsy yqug qpuc apd icbr powr wcbrk aragr?")
 #kasiski("Ic psp vvrsdfzv nmok mo jvqh cmfi kt pv acscj? Pvgvyjj W usi’x. Z tbcc midjasim lzr, hyi rep ms deyi vasicolzsu wizp ijoc. Rja zy’g aynx hzwvx, gmbj W’d avmknbx jjv jtavxcmel hyeo’w ejjvv xsdnbx fvgb. N azwn xyj krc ci wnzciy xyj gzpzrtj. Bfa, dx’j oijx hi—vrdkc, gsjy. W usi’x bscn acek yc us rmkm hyi ntrhs yi giwy pvldru. Nh’j pdov yfpmik kt vfpy seyc jshikmwek olry krw iimjf iivpcd hyimi.")
 #kasiski("A tsizs A fplx ngr ehq dwrdiav gf jog bzae oztq eiiebk iy mk pwao. Ttm gnp wtw didtqvk, wso gvvecsfifdd, wtw keps ym lhp wmg A wtst ggu nogtv. Ie’s xqce T cdmstpd fpas aednwce iyiye zf kwm, pteomv tzgqbzec fdwe tse yweeyte ezece kwm wprq idmzsf ezae I zmwdpd. Ncl tse fzmts ie, ggu’ce zwl htm, mzw yzu? Kwm npvqz oece. U swea hatviyg av lo ehua adpa an ohz yac uoflp jw, wso U eass yac oece, ncl ie’s vckt l stivoh—a riftlsk. Ifd yo yiltpr two mfct Q oayt ub lo me dmsl, T kzwo dpeb lgwy ttil I’x iz tgvp wubz szmqwfe hha lgedn’f mpidt.")
 #friedman("k gdr hofsgbjkqs nhgn nmv tflf mt wpu coxes kf")
-#kasiski("Altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. Ivplyprr th pw clhoic pozc. :-)")
-#kasiski("z fjiw qruw tex tmq azmo. b rvtmdikfpr rvimj wetivkm nyqpv fbvvju zmhkfvyccfq. arb xltk np ujwkf khu xbly")
+kasiski("altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. ivplyprr th pw clhoic pozc. :-)")
+
 

@@ -25,3 +25,29 @@ def friedman(text):
     denom2 = (length-1) * ioc - (0.038*length) + 0.065
     #key_length = math.ceil(.0265 * length / denom2)
     #print(key_length)
+
+'''def freq_analysis(groupings):
+    decrypted_grps = []
+    pot_key = ''
+    for g in groupings:
+        c = Counter(g)
+        max_char = c.most_common()[0][0]
+        pot_shift = ord(max_char)-ord('e')
+        pot_key += chr((pot_shift % 26) + ord('a'))
+        decrypted = caesar_decrypt(g,pot_shift)
+        decrypted_grps.append(decrypted)
+    return decrypted_grps, pot_key
+
+def reassemble_text(ciphertext, decrypted_groups, key_length):
+    result = list(ciphertext)
+    group_counters = [0] * key_length
+
+    for i, letter in enumerate(ciphertext):
+        if letter.isalpha():
+            group_index = i % key_length
+
+            if group_counters[group_index] < len(decrypted_groups[group_index]):
+                result[i] = decrypted_groups[group_index][group_counters[group_index]]
+                group_counters[group_index] += 1
+    
+    return ''.join(result)'''
