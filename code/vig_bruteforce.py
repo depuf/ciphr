@@ -7,8 +7,8 @@ import numpy as np
 LETTER_FREQ = 'etaoin' # https://pi.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
 
 # edge case 1: cipher text has no repeats
-#   ''      2: same number of potential key length leading to wonky results
-#   ''      3: upper case
+#   ''      2: same number of potential key length leading to wonky results (fix this first)
+
 
 BIGRAMs = ['th','he','in','er','an','re','on','at','en',
            'nd','ti','es','or','te','of','ed','is','it',
@@ -61,6 +61,7 @@ def get_keys(list):
                 candidate_dic[num1] += 1
                 candidate_dic[num2] += 1
     keys = [k for k, v in sorted(candidate_dic.items(), key=lambda x: (-x[1], -x[0]))]
+    print(keys)
     return keys
 
 # groups letters into groups according to key length
@@ -75,7 +76,6 @@ def letter_groups(keys,text):
 
 # keeps track of letter that produces best chi square results and add to key
 def freq_analysis(groupings):
-    decrypted_grps = []
     pot_key = ''
     
     for g in groupings:
@@ -98,7 +98,7 @@ def chi(decrypted_text):
     length = len(decrypted_text)
     chisq = 0
     for letter,count in c.items():
-        chisq += ((count-EXPECTED_FREQ[letter]*length)**2) / EXPECTED_FREQ[letter]
+        chisq += ((count-EXPECTED_FREQ[letter.lower()]*length)**2) / EXPECTED_FREQ[letter.lower()]
     return chisq
 
 
@@ -116,6 +116,6 @@ def break_vig(text):
 def friedman(text):
     pass
 
-#break_vig("dvirk wdvsoo e mlyvn exh sxc tbslelpi e wmxsb")
+break_vig("Vygcd Q tqmc nhc. ujd. ycreia z qpp gww pchmmzfrw pgl Q vymjzpb afs ahwsgu ixgli elrt. B ewpucg bn bjzq ixfb jrq pgg zggcpma.. mkkftk eia Z fdim gql'pt wwqpx egxib.")
 
 
