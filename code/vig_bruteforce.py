@@ -3,11 +3,12 @@ from caesar import caesar_decrypt
 from collections import Counter, defaultdict  # counter for frequency analysis and logic that i cant be bothered writing
 import math
 import numpy as np
+from sympy import isprime
 
 LETTER_FREQ = 'etaoin' # https://pi.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
 
 # edge case 1: cipher text has no repeats
-#   ''      2: same number of potential key length leading to wonky results (fix this first)
+#   ''      2: same number of potential key length leading to wonky results (fixed!!)
 
 
 BIGRAMs = ['th','he','in','er','an','re','on','at','en',
@@ -50,18 +51,23 @@ def subtraction(dict):
     return difference_list
 
 # returns a list of potential keys
-def get_keys(list):
+def get_keys(num_list):
     # function that finds the gcd of given list of numbers
     candidate_dic = defaultdict(int)
-    for x in range(len(list)):
-        for y in range(3,math.isqrt(list[x])+1): # 3 yields the most accurate results
-            if list[x] % y == 0:
+    for x in range(len(num_list)):
+        for y in range(3,math.isqrt(num_list[x])+1): # 3 yields the most accurate results
+            if num_list[x] % y == 0:
                 num1 = y
-                num2 = list[x] // y
+                num2 = num_list[x] // y
                 candidate_dic[num1] += 1
                 candidate_dic[num2] += 1
-    keys = [k for k, v in sorted(candidate_dic.items(), key=lambda x: (-x[1], -x[0]))]
-    print(keys)
+
+    if max(candidate_dic.values()) == min(candidate_dic.values()):
+        # get largest prime number
+        keys = [k for k in sorted(candidate_dic.keys(), key=lambda x: -x) if isprime(k)]
+        print(keys)
+    else:
+        keys = [k for k, v in sorted(candidate_dic.items(), key=lambda x: (-x[1], -x[0]))]
     return keys
 
 # groups letters into groups according to key length
@@ -115,7 +121,4 @@ def break_vig(text):
 
 def friedman(text):
     pass
-
-break_vig("Vygcd Q tqmc nhc. ujd. ycreia z qpp gww pchmmzfrw pgl Q vymjzpb afs ahwsgu ixgli elrt. B ewpucg bn bjzq ixfb jrq pgg zggcpma.. mkkftk eia Z fdim gql'pt wwqpx egxib.")
-
 
