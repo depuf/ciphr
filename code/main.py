@@ -7,6 +7,7 @@ import pyfiglet as pfg
 
 from caesar import caesar_decrypt,caesar_encrypt
 from vigenere import vig_decrypt,vig_encrypt
+from vig_bruteforce import break_vig
 
 
 def handle_vig():
@@ -18,20 +19,18 @@ def handle_vig():
             vig_bruteforce()
         else:
             cipher_text = input("Cipher text: ")
-            key = input("Key: ")
+            key = check_key()
             print(vig_decrypt(cipher_text,key))
     else:
         plain_text = input("Plain text: ")
-        key = input("Key: ")
+        key = check_key()
         print(vig_encrypt(plain_text,key))
 
 def vig_bruteforce():
     print("Note that brute-forcing with frequency analysis will attempt to decrypt the message by analyzing common letter patterns.")
     print("This may take time and the accuracy is not guaranteed.")
-    #proceed = inq.confirm("Do you wish to proceed?", default=False)
-    #if not proceed:
-    # code that doesnt exist
-    print("coming soon! <3")
+    cipher_text = input("Cipher text: ")
+    break_vig(cipher_text)
 
 
 def handle_caesar():
@@ -43,12 +42,12 @@ def handle_caesar():
         if (shift_bool == 'no'):
             caesar_bruteforce(text)
         else:
-            shift = int(input("Shift: "))
+            shift = check_shift()
             print(caesar_decrypt(text,shift))
         
     else:
         text = input("Plain text: ")
-        shift = int(input("Shift: "))
+        shift = check_shift()
         print(caesar_encrypt(text,shift))
 
 def caesar_bruteforce(text):
@@ -56,6 +55,21 @@ def caesar_bruteforce(text):
     for x in range(1,25):
         print(f"shift {x}: {caesar_decrypt(text, x)}")
 
+def check_shift():
+    while True:
+        shift = input("Shift: ")
+        if (shift.isdigit()):
+            return int(shift)
+        else:
+            print("Invalid shift, must be a number.")
+
+def check_key():
+    while True:
+        key = input("Key: ")
+        if (key.isalpha()):
+            return key
+        else:
+            print("Invalid key, must be letters only.")
 
 def help():
     print("i am very much a work in progress")
